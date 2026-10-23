@@ -112,7 +112,45 @@
   .zap-fixo { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 30; width: 58px; height: 58px; border-radius: 50%; background: var(--zap); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, .4); }
   .zap-fixo svg { width: 28px; height: 28px; }
 
+  /* Simulador de película (mesmo princípio da prévia da Rospeças) */
+  .sim { display: grid; grid-template-columns: .95fr 1.05fr; grid-template-areas: "cab vis" "ctrl vis"; column-gap: 48px; align-items: center; }
+  .sim__cab { grid-area: cab; align-self: end; }
+  .sim__ctrl { grid-area: ctrl; align-self: start; }
+  .sim__vis { grid-area: vis; display: grid; gap: 14px; }
+  .vidros { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+  .vidros legend { width: 100%; font-weight: 700; margin-bottom: 8px; }
+  .tons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 10px; }
+  .tons button { min-height: 48px; background: var(--grafite); color: var(--texto); border: 1px solid var(--linha); border-radius: 10px; font-family: var(--disp); font-weight: 800; font-style: italic; font-size: 20px; cursor: pointer; }
+  .tons button[aria-checked="true"] { background: var(--azul); border-color: var(--azul); color: #fff; }
+  .faixa input { width: 100%; height: 34px; accent-color: var(--azul); cursor: pointer; }
+  .selo { min-height: 48px; margin: 10px 0 12px; padding: 10px 14px; border-left: 4px solid var(--azul); background: rgba(47, 140, 255, .1); font-weight: 600; font-size: 15.5px; }
+  .selo[data-estado="alerta"] { border-color: #ffc24b; background: rgba(255, 194, 75, .1); }
+  .selo[data-estado="fora"] { border-color: #ff5a5a; background: rgba(255, 90, 90, .12); }
+  .lei { font-size: 14px; color: var(--suave); margin: 0 0 20px; }
+  .leitura { display: flex; align-items: baseline; gap: 14px; line-height: 1; }
+  .leitura b { font-family: var(--disp); font-weight: 800; font-style: italic; font-size: clamp(60px, 7vw, 96px); color: var(--azul); }
+  .leitura span { color: var(--suave); }
+  .janela { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #22262c; clip-path: polygon(24% 0, 93% 0, 100% 9%, 100% 100%, 0 100%, 0 52%); border-radius: 6px; }
+  .janela img { width: 100%; height: 100%; object-fit: cover; filter: blur(1px) saturate(1.1); transform: scale(1.04); }
+  .janela__tinta { position: absolute; inset: 0; background: #04060a; opacity: .77; transition: opacity .35s ease; }
+  .janela__reflexo { position: absolute; inset: 0; background: linear-gradient(112deg, transparent 0 38%, rgba(255, 255, 255, .16) 38% 46%, transparent 46% 52%, rgba(255, 255, 255, .08) 52% 55%, transparent 55%); }
+  .janela__vista { position: absolute; right: 12px; bottom: 10px; font-size: 12px; color: rgba(255, 255, 255, .75); }
+
+  /* Envelopamento: troca de cor do carro */
+  .envelope { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: var(--grafite); border: 1px solid var(--linha); border-radius: 22px; padding: 40px; }
+  .cores { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 14px; }
+  .cores button { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--linha); cursor: pointer; position: relative; }
+  .cores button[aria-checked="true"] { outline: 3px solid var(--azul); outline-offset: 3px; }
+  .cor-nome { font-family: var(--disp); font-size: 26px; font-weight: 800; text-transform: uppercase; }
+  .carro-svg { width: 100%; height: auto; }
+  .carro-svg .lata { transition: fill .4s ease; }
+
   @media (max-width: 960px) {
+    .sim { grid-template-columns: 1fr; grid-template-areas: "cab" "vis" "ctrl"; row-gap: 18px; }
+    .envelope { grid-template-columns: 1fr; padding: 28px 20px; gap: 20px; }
+    .envelope .carro-svg { order: -1; }
+    .cores { gap: 8px; }
+    .cores button { width: 42px; height: 42px; }
     .servicos { grid-template-columns: 1fr; }
     .orcamento { grid-template-columns: 1fr; padding: 30px 20px; }
   }
@@ -135,7 +173,7 @@
 <header>
   <div class="wrap">
     <a class="marca" href="#topo">CONCEPT <span>PELÍCULAS</span></a>
-    <nav aria-label="Principal"><a href="#servicos">Serviços</a><a href="#orcamento">Orçamento</a><a href="#loja">Loja</a></nav>
+    <nav aria-label="Principal"><a href="#servicos">Serviços</a><a href="#simulador">Simulador</a><a href="#envelopamento">Cores</a><a href="#orcamento">Orçamento</a><a href="#loja">Loja</a></nav>
     <a class="btn btn-azul" href="#orcamento">Orçamento</a>
   </div>
 </header>
@@ -173,9 +211,84 @@
         <p>Cada orçamento é feito pelo modelo do carro. Escolha o serviço e mande os detalhes: a resposta vem pelo WhatsApp.</p>
       </div>
       <div class="servicos">
-        <article class="serv"><span class="n">01</span><h3>Película automotiva</h3><p>Insulfilm nos vidros para conforto térmico, privacidade e visual. Opções de tonalidade para cada vidro.</p><a href="#orcamento" data-serv="Película automotiva">Orçar película →</a></article>
+        <article class="serv"><span class="n">01</span><h3>Película automotiva</h3><p>Insulfilm nos vidros para conforto térmico, privacidade e visual. Opções de tonalidade para cada vidro.</p><a href="#simulador">Simular o tom →</a></article>
         <article class="serv"><span class="n">02</span><h3>PPF</h3><p>Película de proteção de pintura contra riscos, pedriscos e desgaste do dia a dia, em peças ou no carro inteiro.</p><a href="#orcamento" data-serv="PPF (proteção de pintura)">Orçar PPF →</a></article>
-        <article class="serv"><span class="n">03</span><h3>Envelopamento</h3><p>Troca de cor ou detalhes (teto, retrovisor, colunas) sem mexer na pintura original.</p><a href="#orcamento" data-serv="Envelopamento">Orçar envelopamento →</a></article>
+        <article class="serv"><span class="n">03</span><h3>Envelopamento</h3><p>Troca de cor ou detalhes (teto, retrovisor, colunas) sem mexer na pintura original.</p><a href="#envelopamento">Testar cores →</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco" id="simulador" style="padding-top:0">
+    <div class="wrap sim">
+      <div class="sim__cab">
+        <span class="rotulo">Simulador de película</span>
+        <h2>Escolha o tom. <span>A gente aplica.</span></h2>
+        <p style="color:var(--suave)">Arraste e veja como fica o vidro visto de fora. Quanto menor o número, mais escuro: o G5 deixa passar 5% da luz e o G70, 70%.</p>
+      </div>
+      <div class="sim__ctrl">
+        <fieldset class="vidros opcoes">
+          <legend>Qual vidro?</legend>
+          <label><input type="radio" name="vidro" value="traseiro" checked><span>Traseiros</span></label>
+          <label><input type="radio" name="vidro" value="dianteiro"><span>Dianteiros</span></label>
+          <label><input type="radio" name="vidro" value="parabrisa"><span>Para-brisa</span></label>
+        </fieldset>
+        <div class="tons" role="radiogroup" aria-label="Tom da película">
+          <button type="button" role="radio" data-tom="5">G5</button>
+          <button type="button" role="radio" data-tom="20" aria-checked="true">G20</button>
+          <button type="button" role="radio" data-tom="35">G35</button>
+          <button type="button" role="radio" data-tom="50">G50</button>
+          <button type="button" role="radio" data-tom="70">G70</button>
+        </div>
+        <label class="faixa"><span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Luz que passa pela película</span><input type="range" min="5" max="80" step="1" value="20" id="faixa"></label>
+        <p class="selo" id="selo" aria-live="polite"></p>
+        <p class="lei">Por lei, para-brisa e vidros da frente precisam deixar passar pelo menos 75% e 70% da luz (vidro + película). Nos traseiros o tom é livre, com os dois retrovisores externos. A gente mede e orienta antes de aplicar.</p>
+        <a class="btn btn-azul" id="wa-tom" href="#" target="_blank" rel="noopener">Quero esse tom</a>
+      </div>
+      <div class="sim__vis" aria-hidden="true">
+        <div class="leitura"><b id="leitura-g">G20</b><span id="leitura-txt">20% da luz passa</span></div>
+        <div class="janela">
+          <img src="assets/rua.webp" alt="" width="720" height="580" loading="lazy">
+          <span class="janela__tinta" id="tinta"></span>
+          <span class="janela__reflexo"></span>
+          <span class="janela__vista" id="vidro-nome">vidros traseiros · vista de fora</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco" id="envelopamento" style="padding-top:0">
+    <div class="wrap">
+      <div class="envelope">
+        <div>
+          <span class="rotulo">Envelopamento</span>
+          <h2>Troque a cor <span>sem pintar.</span></h2>
+          <p style="color:var(--suave)">Toque nas cores e imagine o seu carro. O envelopamento protege a pintura original e pode ser removido depois.</p>
+          <div class="cores" role="radiogroup" aria-label="Cor do envelopamento">
+            <button type="button" role="radio" aria-label="Preto fosco" data-cor="#1b1d21" data-nome="Preto fosco" aria-checked="true" style="background:#1b1d21"></button>
+            <button type="button" role="radio" aria-label="Grafite" data-cor="#4a5059" data-nome="Grafite" style="background:#4a5059"></button>
+            <button type="button" role="radio" aria-label="Azul" data-cor="#1f5fc4" data-nome="Azul" style="background:#1f5fc4"></button>
+            <button type="button" role="radio" aria-label="Verde militar" data-cor="#4b5a3c" data-nome="Verde militar" style="background:#4b5a3c"></button>
+            <button type="button" role="radio" aria-label="Branco perolado" data-cor="#e9ecef" data-nome="Branco perolado" style="background:#e9ecef"></button>
+            <button type="button" role="radio" aria-label="Vermelho" data-cor="#b3202a" data-nome="Vermelho" style="background:#b3202a"></button>
+          </div>
+          <p class="cor-nome" id="cor-nome">Preto fosco</p>
+          <a class="btn btn-azul" id="wa-cor" href="#" target="_blank" rel="noopener">Orçar envelopamento nessa cor</a>
+        </div>
+        <svg class="carro-svg" viewBox="0 0 640 300" aria-hidden="true">
+          <defs>
+            <linearGradient id="brilho" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".45" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
+          </defs>
+          <ellipse cx="330" cy="262" rx="290" ry="14" fill="#000" opacity=".6"/>
+          <path class="lata" id="lata" d="M40 210 Q38 160 90 150 L190 122 Q240 66 290 62 L440 62 Q490 64 530 124 L590 140 Q622 150 620 196 L616 222 Q612 232 600 232 L52 232 Q40 230 40 210 Z" fill="#1b1d21"/>
+          <path d="M40 210 Q38 160 90 150 L190 122 Q240 66 290 62 L440 62 Q490 64 530 124 L590 140 Q622 150 620 196 L616 222 Q612 232 600 232 L52 232 Q40 230 40 210 Z" fill="url(#brilho)"/>
+          <path d="M200 118 L250 76 Q262 70 280 70 L322 70 L322 118 Z M332 70 L430 70 Q470 72 500 118 L332 118 Z" fill="#0b0e12" opacity=".92"/>
+          <path d="M60 170 H600" stroke="#fff" stroke-width="2" opacity=".18"/>
+          <path d="M300 140 h22 M440 140 h22" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+          <path d="M584 150 q20 4 28 18 l-26 -2 z" fill="#f4f6f1"/>
+          <path d="M44 172 q8 -14 26 -16 l2 18 z" fill="#E3262B"/>
+          <g><circle cx="150" cy="226" r="44" fill="#0d0f12"/><circle cx="150" cy="226" r="28" fill="#5d636b"/><circle cx="150" cy="226" r="8" fill="#0d0f12"/></g>
+          <g><circle cx="510" cy="226" r="44" fill="#0d0f12"/><circle cx="510" cy="226" r="28" fill="#5d636b"/><circle cx="510" cy="226" r="8" fill="#0d0f12"/></g>
+        </svg>
       </div>
     </div>
   </section>
@@ -260,6 +373,43 @@
     const r = document.querySelector(`input[name=serv][value="${a.dataset.serv}"]`);
     if (r) r.checked = true;
   }));
+  const wa = (txt) => "https://wa.me/5548996655721?text=" + encodeURIComponent(txt);
+
+  // Simulador de película
+  const nomes = { traseiro: "traseiros", dianteiro: "dianteiros", parabrisa: "do para-brisa" };
+  const faixa = document.getElementById("faixa");
+  let tom = 20;
+  function setTom(t, origem) {
+    tom = Math.round(t);
+    const vidro = (document.querySelector("input[name=vidro]:checked") || {}).value || "traseiro";
+    document.getElementById("tinta").style.opacity = (1 - tom / 100) * .96;
+    document.getElementById("vidro-nome").textContent = { traseiro: "vidros traseiros", dianteiro: "vidros dianteiros", parabrisa: "para-brisa" }[vidro] + " · vista de fora";
+    if (origem !== "faixa") faixa.value = tom;
+    document.querySelectorAll("[data-tom]").forEach((b) => b.setAttribute("aria-checked", String(+b.dataset.tom === tom)));
+    document.getElementById("leitura-g").textContent = "G" + tom;
+    document.getElementById("leitura-txt").textContent = `${tom}% da luz passa`;
+    const minimo = vidro === "parabrisa" ? 75 : vidro === "dianteiro" ? 70 : 0;
+    const selo = document.getElementById("selo");
+    if (!minimo) { selo.dataset.estado = "ok"; selo.textContent = "✓ Tom liberado nos vidros traseiros (com os dois retrovisores externos)."; }
+    else if (tom < minimo) { selo.dataset.estado = "fora"; selo.textContent = `✕ Escuro demais ${vidro === "parabrisa" ? "para o para-brisa" : "para os vidros da frente"}: o mínimo é ${minimo}%.`; }
+    else { selo.dataset.estado = "alerta"; selo.textContent = `No limite: somando com o vidro original, pode ficar abaixo de ${minimo}%. A gente mede antes de aplicar.`; }
+    document.getElementById("wa-tom").href = wa(`Olá, Concept! Vi o simulador no site e quero orçamento de película G${tom} nos vidros ${nomes[vidro]}. Meu carro é: `);
+  }
+  faixa.addEventListener("input", () => setTom(+faixa.value, "faixa"));
+  document.querySelectorAll("[data-tom]").forEach((b) => b.addEventListener("click", () => setTom(+b.dataset.tom)));
+  document.querySelectorAll("input[name=vidro]").forEach((r) => r.addEventListener("change", () => setTom(tom)));
+  setTom(20);
+
+  // Envelopamento: cor do carro
+  function setCor(b) {
+    document.querySelectorAll("[data-cor]").forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+    document.getElementById("lata").setAttribute("fill", b.dataset.cor);
+    document.getElementById("cor-nome").textContent = b.dataset.nome;
+    document.getElementById("wa-cor").href = wa(`Olá, Concept! Vi no site e quero orçamento de envelopamento na cor ${b.dataset.nome}. Meu carro é: `);
+  }
+  document.querySelectorAll("[data-cor]").forEach((b) => b.addEventListener("click", () => setCor(b)));
+  setCor(document.querySelector("[data-cor]"));
+
   document.getElementById("form").addEventListener("submit", (e) => {
     e.preventDefault();
     const f = new FormData(e.target);
