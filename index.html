@@ -8,7 +8,8 @@
 <meta name="description" content="Prévia de site para a Concept Películas & Envelopamento — película automotiva, PPF e envelopamento em Criciúma.">
 <meta property="og:title" content="Concept Películas & Envelopamento · prévia de site">
 <meta property="og:description" content="Proposta de página com os serviços e o orçamento direto no WhatsApp.">
-<meta property="og:image" content="assets/renan.jpg">
+<meta property="og:image" content="assets/logo-og.jpg">
+<link rel="icon" href="assets/logo-96.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap">
@@ -19,8 +20,9 @@
     --grafite: #12161c;
     --grafite-2: #1a2028;
     --linha: #26303b;
-    --azul: #2f8cff;
-    --azul-claro: #8cc2ff;
+    --azul: #22a8ff;
+    --azul-claro: #86d4ff;
+    --sobre-azul: #03111d;
     --texto: #e9eef4;
     --suave: #9aa7b6;
     --zap: #1fa856;
@@ -33,18 +35,20 @@
   img { max-width: 100%; display: block; }
   a { color: inherit; }
   .wrap { width: min(1140px, 100% - 40px); margin-inline: auto; }
-  .previa { background: var(--azul); color: #fff; text-align: center; font-size: 13px; font-weight: 600; padding: 7px 12px; }
+  .previa { background: var(--azul); color: var(--sobre-azul); text-align: center; font-size: 13px; font-weight: 600; padding: 7px 12px; }
 
   header { position: sticky; top: 0; z-index: 20; background: rgba(7, 9, 12, .9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linha); }
   header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 14px; height: 64px; }
   .marca { font-family: var(--disp); font-weight: 800; font-size: 24px; letter-spacing: .04em; text-decoration: none; white-space: nowrap; }
+  .marca { display: flex; align-items: center; gap: 10px; }
+  .marca img { width: 42px; height: 42px; border-radius: 50%; }
   .marca span { color: var(--azul); }
   nav { display: flex; gap: 24px; font-size: 15px; font-weight: 500; }
   nav a { text-decoration: none; color: var(--suave); }
   nav a:hover { color: var(--texto); }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; border: 0; cursor: pointer; white-space: nowrap; transition: transform .2s, filter .2s; }
   .btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
-  .btn-azul { background: var(--azul); color: #fff; }
+  .btn-azul { background: var(--azul); color: var(--sobre-azul); }
   .btn-linha { border: 1px solid var(--linha); color: var(--texto); background: var(--grafite); }
   .btn-zap { background: var(--zap); color: #fff; }
   .btn svg { width: 18px; height: 18px; }
@@ -66,6 +70,19 @@
   .acoes { display: flex; flex-wrap: wrap; gap: 12px; }
   .selos { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 30px; font-size: 15px; color: var(--suave); }
   .selos b { color: var(--texto); font-family: var(--disp); font-size: 22px; margin-right: 4px; }
+  .foto-heroi { position: relative; margin: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--linha); aspect-ratio: 4 / 5; box-shadow: 0 30px 80px -30px rgba(34, 168, 255, .35); }
+  .foto-heroi img.foto { width: 100%; height: 100%; object-fit: cover; }
+  .foto-heroi::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(7, 9, 12, .9)); }
+  .foto-heroi figcaption { position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 1; display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: var(--texto); }
+  .foto-heroi figcaption img { width: 54px; height: 54px; border-radius: 50%; flex: none; }
+  .foto-heroi figcaption b { display: block; font-family: var(--disp); font-size: 20px; text-transform: uppercase; }
+  .desde { position: absolute; top: 16px; left: 16px; z-index: 1; background: rgba(7, 9, 12, .78); border: 1px solid var(--azul); color: var(--azul-claro); font-family: var(--disp); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 8px; }
+  .quem { display: grid; grid-template-columns: .8fr 1.2fr; gap: 40px; align-items: center; }
+  .quem figure { margin: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--linha); aspect-ratio: 877 / 1080; }
+  .quem figure img { width: 100%; height: 100%; object-fit: cover; }
+  .quem .lista { list-style: none; padding: 0; margin: 18px 0 24px; display: grid; gap: 10px; }
+  .quem .lista li { padding-left: 26px; position: relative; color: var(--suave); }
+  .quem .lista li::before { content: "✓"; position: absolute; left: 0; color: var(--azul); font-weight: 800; }
   .cartao-renan { background: linear-gradient(160deg, var(--grafite-2), var(--grafite)); border: 1px solid var(--linha); border-radius: 18px; padding: 26px; display: grid; gap: 14px; }
   .cartao-renan .topo { display: flex; gap: 14px; align-items: center; }
   .cartao-renan img { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; border: 2px solid var(--azul); }
@@ -94,7 +111,7 @@
   .opcoes label { position: relative; }
   .opcoes input { position: absolute; opacity: 0; inset: 0; }
   .opcoes span { display: inline-flex; min-height: 44px; align-items: center; padding: 0 16px; border-radius: 10px; border: 1px solid #2a4266; background: rgba(7, 9, 12, .4); cursor: pointer; font-weight: 600; }
-  .opcoes input:checked + span { background: var(--azul); border-color: var(--azul); color: #fff; }
+  .opcoes input:checked + span { background: var(--azul); border-color: var(--azul); color: var(--sobre-azul); }
   .opcoes input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
   .campo { width: 100%; min-height: 48px; border-radius: 10px; border: 1px solid #2a4266; background: rgba(7, 9, 12, .5); color: var(--texto); padding: 0 14px; font: inherit; }
   .obs { font-size: 13.5px; color: var(--suave); margin: 0; }
@@ -121,9 +138,9 @@
   .vidros legend { width: 100%; font-weight: 700; margin-bottom: 8px; }
   .tons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 10px; }
   .tons button { min-height: 48px; background: var(--grafite); color: var(--texto); border: 1px solid var(--linha); border-radius: 10px; font-family: var(--disp); font-weight: 800; font-style: italic; font-size: 20px; cursor: pointer; }
-  .tons button[aria-checked="true"] { background: var(--azul); border-color: var(--azul); color: #fff; }
+  .tons button[aria-checked="true"] { background: var(--azul); border-color: var(--azul); color: var(--sobre-azul); }
   .faixa input { width: 100%; height: 34px; accent-color: var(--azul); cursor: pointer; }
-  .selo { min-height: 48px; margin: 10px 0 12px; padding: 10px 14px; border-left: 4px solid var(--azul); background: rgba(47, 140, 255, .1); font-weight: 600; font-size: 15.5px; }
+  .selo { min-height: 48px; margin: 10px 0 12px; padding: 10px 14px; border-left: 4px solid var(--azul); background: rgba(34, 168, 255, .1); font-weight: 600; font-size: 15.5px; }
   .selo[data-estado="alerta"] { border-color: #ffc24b; background: rgba(255, 194, 75, .1); }
   .selo[data-estado="fora"] { border-color: #ff5a5a; background: rgba(255, 90, 90, .12); }
   .lei { font-size: 14px; color: var(--suave); margin: 0 0 20px; }
@@ -159,7 +176,8 @@
     header .btn { min-height: 42px; padding: 0 16px; font-size: 15px; }
     .marca { font-size: 20px; }
     .heroi { padding: 44px 0 52px; }
-    .heroi .wrap, .duas { grid-template-columns: 1fr; }
+    .heroi .wrap, .duas, .quem { grid-template-columns: 1fr; }
+    .foto-heroi { aspect-ratio: 4 / 4.2; }
     .faixas { opacity: .35; }
     .acoes .btn { flex: 1 1 100%; }
     section.bloco { padding: 60px 0; }
@@ -172,7 +190,7 @@
 
 <header>
   <div class="wrap">
-    <a class="marca" href="#topo">CONCEPT <span>PELÍCULAS</span></a>
+    <a class="marca" href="#topo"><img src="assets/logo-96.webp" alt="" width="42" height="42">CONCEPT <span>PELÍCULAS</span></a>
     <nav aria-label="Principal"><a href="#servicos">Serviços</a><a href="#simulador">Simulador</a><a href="#envelopamento">Cores</a><a href="#orcamento">Orçamento</a><a href="#loja">Loja</a></nav>
     <a class="btn btn-azul" href="#orcamento">Orçamento</a>
   </div>
@@ -193,13 +211,34 @@
         <div class="selos">
           <span><b>4,9</b><span class="estrelas" aria-hidden="true">★★★★★</span> 143 avaliações no Google</span>
           <span><b>110 mil</b> seguidores no Instagram</span>
+          <span><b>Desde</b> 2013</span>
         </div>
       </div>
-      <aside class="cartao-renan">
-        <div class="topo"><img src="assets/renan.jpg" alt="Renan Luiz Teixeira"><div><b>Renan Luiz</b><small>Fundador · @conceptpeliculas</small></div></div>
-        <p>Além de atender aqui em Criciúma, o Renan forma novos aplicadores nos cursos de insulfilm e de PPF. O mesmo padrão que ele ensina é o que vai no seu carro.</p>
-        <a class="btn btn-linha" href="https://aplicadordozero.com.br" target="_blank" rel="noopener">Conhecer o curso Aplicador do Zero</a>
-      </aside>
+      <figure class="foto-heroi">
+        <span class="desde">Desde 2013</span>
+        <img class="foto" src="assets/renan-900.webp" srcset="assets/renan-560.webp 560w, assets/renan-900.webp 900w" sizes="(max-width: 760px) 92vw, 420px" alt="Renan Luiz aplicando película no para-brisa com soprador térmico" width="900" height="1100" fetchpriority="high">
+        <figcaption><img src="assets/logo-96.webp" alt="Logo da Concept Películas" width="54" height="54"><span><b>Renan Luiz</b>Fundador · aplicando película no para-brisa</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="bloco" id="quem">
+    <div class="wrap quem">
+      <figure><img src="assets/aplicando-820.webp" srcset="assets/aplicando-520.webp 520w, assets/aplicando-820.webp 820w" sizes="(max-width: 760px) 92vw, 440px" alt="Renan aplicando película no teto solar" width="820" height="1010" loading="lazy"></figure>
+      <div>
+        <span class="rotulo">Quem aplica</span>
+        <h2>Quem ensina, <span>aplica melhor.</span></h2>
+        <p style="color:var(--suave)">A Concept está no mercado desde 2013. Além de atender aqui em Criciúma, o Renan forma novos aplicadores nos cursos de insulfilm e de PPF. O padrão que ele ensina é o que vai no seu carro.</p>
+        <ul class="lista">
+          <li>Película automotiva, PPF e envelopamento no mesmo lugar</li>
+          <li>Orientação sobre o tom permitido em cada vidro</li>
+          <li>Atendimento por mensagem, com orçamento pelo modelo do carro</li>
+        </ul>
+        <div class="acoes">
+          <a class="btn btn-azul" href="#orcamento">Fazer meu orçamento</a>
+          <a class="btn btn-linha" href="https://aplicadordozero.com.br" target="_blank" rel="noopener">Conhecer o curso Aplicador do Zero</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -247,7 +286,7 @@
       <div class="sim__vis" aria-hidden="true">
         <div class="leitura"><b id="leitura-g">G20</b><span id="leitura-txt">20% da luz passa</span></div>
         <div class="janela">
-          <img src="assets/rua.webp" alt="" width="720" height="580" loading="lazy">
+          <img src="assets/vista.svg" alt="" width="720" height="405" loading="lazy">
           <span class="janela__tinta" id="tinta"></span>
           <span class="janela__reflexo"></span>
           <span class="janela__vista" id="vidro-nome">vidros traseiros · vista de fora</span>
